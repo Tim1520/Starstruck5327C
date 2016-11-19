@@ -35,18 +35,18 @@ void autonCloseRed()
 	gyroSetup(900,127);
 
 	//*Reverse to knock off fence.
-	turn(200,80,LEFT,100);
+	turn(210,80,LEFT,100);
 	bwds(345,100,100);
-	turn(190,90,RIGHT,100);
+	turn(170,90,RIGHT,100);
 	bwds(140,100,300);
 
-	fwds(140,100,50);
+	fwds(130,100,50);
 	swing(840,90,LEFT,50);
-	fwds(790,80,100);
+	fwds(775,80,100);
 	claw(100);
 	pArm(1700,0.07,0);
 
-	turn(760,80,RIGHT,0);
+	turn(700,80,RIGHT,0);
 	base(10,-10);
 	wait1Msec(100);
 	base(0,0);
