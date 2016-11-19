@@ -13,9 +13,9 @@ void gyroSetup(int height, int speed)
 	bwds(110,100,50);
 	claw(0);
 	armState(1);
-	wait1Msec(300);
+	wait1Msec(400);
 	armState(-1);
-	wait1Msec(100);
+	wait1Msec(200);
 	armState(0);
 	bwds(60,100,50);
 }
@@ -31,9 +31,9 @@ void gyroSetupAlt(int height, int speed)
 	bwds(110,100,50);
 	claw(0);
 	armState(1);
-	wait1Msec(300);
+	wait1Msec(400);
 	armState(-1);
-	wait1Msec(100);
+	wait1Msec(200);
 	armState(0);
 	wait1Msec(600);
 	claw(50);

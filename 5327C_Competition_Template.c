@@ -41,10 +41,10 @@ void pre_auton(){}
 //--------------------------------------------------------------------------------------------------------//
 task autonomous
 {
-	//autonFarRed();
-	autonCloseRed();
-	//autonFarBlue();
-	//autonCloseBlue();
+	//autonLeftAlt();
+	autonLeft();
+	//autonRightAlt();
+	//autonRight();
 	//skills();
 }
 
@@ -61,11 +61,11 @@ task usercontrol()
 		baseToLift(vexRT[Btn8U] || vexRT[Btn8UXmtr2]);
 		hang(vexRT[Btn8R] || vexRT[Btn8RXmtr2], 127);
 		arm(vexRT[Btn6U] || vexRT[Btn6UXmtr2], vexRT[Btn6D] || vexRT[Btn6DXmtr2], 0.07);
-		if(vexRT[Btn8D] == 1)
+		/*if(vexRT[Btn8D] == 1)
 		{
 			startTask(killSwitch);
-			autonFarRed();
-		}
+			autonRightAlt();
+		}*/
 	}
 }
 //...THE_END...//
