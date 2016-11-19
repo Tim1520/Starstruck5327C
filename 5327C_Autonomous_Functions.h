@@ -150,7 +150,7 @@ void launch(int wait)
 	}
 	arm(0,0,0);
 	wait1Msec(300);
-	while(SensorValue[armPot] > LaunchRest)
+	while(SensorValue[armPot] > launchRest)
 	{
 		armState(-1);
 	}

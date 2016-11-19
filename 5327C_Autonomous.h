@@ -3,7 +3,7 @@
 //********************************************************************************************************//
 void autonCloseRedAlt()
 {
-	gyroSetup(900,127);
+	gyroSetupAlt(900,127);
 
 	//*Reverse to knock off fence.
 	turn(200,80,LEFT,100);
@@ -36,30 +36,29 @@ void autonCloseRed()
 
 	//*Reverse to knock off fence.
 	turn(200,80,LEFT,100);
-	bwds(330,100,100);
+	bwds(345,100,100);
 	turn(190,90,RIGHT,100);
-	bwds(240,100,300);
+	bwds(140,100,300);
 
-	fwds(200,100,50);
-	swing(870,90,LEFT,50);
-	pArm(1250,0.07,0);
-	claw(0);
-	fwds(800,80,100);
+	fwds(140,100,50);
+	swing(840,90,LEFT,50);
+	fwds(790,80,100);
 	claw(100);
-	pArm(1400,0.07,0);
+	pArm(1700,0.07,0);
 
-
-	turn(880,80,RIGHT,0);
-	knockknock(1300,100);
+	turn(760,80,RIGHT,0);
+	base(10,-10);
+	wait1Msec(100);
+	base(0,0);
+	knockknock(1250,100);
 	bwdsLaunch(250,100,0);
 
 	turn(20,80,RIGHT,100);
-	fwds(300,100,100);
+	fwds(350,100,200);
 	claw(400);
-	pArm(2000,0.07,0);
-	turn(20,80,LEFT,0);
+	pArm(1400,0.07,0);
 	lift(1,0,0,0,20,4000,0);
-	bwdsLaunch(300,100,0);
+	bwdsLaunch(500,100,0);
 
 	//*/
 	wait1Msec(1000);

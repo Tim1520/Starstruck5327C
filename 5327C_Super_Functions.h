@@ -10,10 +10,28 @@ void gyroSetup(int height, int speed)
 	knockknock(height,speed);
 	clearTimer(T2);
 	nMotorEncoder[LBBase] = 0;
-	bwds(150,100,50);
+	bwds(110,100,50);
 	claw(0);
 	armState(1);
-	wait1Msec(200);
+	wait1Msec(300);
+	armState(-1);
+	wait1Msec(100);
+	armState(0);
+	bwds(60,100,50);
+}
+
+
+void gyroSetupAlt(int height, int speed)
+{
+	SensorType[in2] = sensorNone;
+	SensorType[in2] = sensorGyro;
+	knockknock(height,speed);
+	clearTimer(T2);
+	nMotorEncoder[LBBase] = 0;
+	bwds(110,100,50);
+	claw(0);
+	armState(1);
+	wait1Msec(300);
 	armState(-1);
 	wait1Msec(100);
 	armState(0);
@@ -21,17 +39,6 @@ void gyroSetup(int height, int speed)
 	claw(50);
 	bwds(60,100,0);
 	pArm(1400,0.07,100);
-}
-
-void gyroSetupSkills(int height, int speed)
-{
-	SensorType[in2] = sensorNone;
-	SensorType[in2] = sensorGyro;
-	knockknock(height,speed);
-	bwds(650,100,400);
-	lclaw(true);
-	rclaw(true);
-	wait1Msec(1000);
 }
 
 void bwdsLaunch(int distance, int speed, int wait)
@@ -51,7 +58,7 @@ void bwdsLaunch(int distance, int speed, int wait)
 		armState(1);
 		if(abs(nMotorEncoder[LBBase]) < distance && time1[T2] < 3000)
 		{
-			base(speed,speed);
+			base(-speed,-speed);
 		}
 		else
 		{
@@ -63,7 +70,7 @@ void bwdsLaunch(int distance, int speed, int wait)
 	{
 		if(abs(nMotorEncoder[LBBase]) < distance && time1[T2] < 3000)
 		{
-			base(speed,speed);
+			base(-speed,-speed);
 		}
 		else
 		{

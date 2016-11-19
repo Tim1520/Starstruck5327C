@@ -41,8 +41,8 @@ void pre_auton(){}
 //--------------------------------------------------------------------------------------------------------//
 task autonomous
 {
-	autonFarRed();
-	//autonCloseRed();
+	//autonFarRed();
+	autonCloseRed();
 	//autonFarBlue();
 	//autonCloseBlue();
 	//skills();
