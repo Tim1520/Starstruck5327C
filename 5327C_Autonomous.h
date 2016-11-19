@@ -47,7 +47,7 @@ void autonCloseRed()
 	pArm(1700,0.07,0);
 
 	turn(700,80,RIGHT,0);
-	base(10,-10);
+	base(-10,10);
 	wait1Msec(100);
 	base(0,0);
 	knockknock(1250,100);
