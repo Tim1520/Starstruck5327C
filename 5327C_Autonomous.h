@@ -38,7 +38,7 @@ void autonCloseRed()
 	turn(200,80,LEFT,100);
 	bwds(330,100,100);
 	turn(190,90,RIGHT,100);
-	bwds(270,100,300);
+	bwds(240,100,300);
 
 	fwds(200,100,50);
 	swing(870,90,LEFT,50);

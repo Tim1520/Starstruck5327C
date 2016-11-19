@@ -10,7 +10,7 @@ void gyroSetup(int height, int speed)
 	knockknock(height,speed);
 	clearTimer(T2);
 	nMotorEncoder[LBBase] = 0;
-	bwds(100,100,50);
+	bwds(150,100,50);
 	claw(0);
 	armState(1);
 	wait1Msec(200);
@@ -19,7 +19,7 @@ void gyroSetup(int height, int speed)
 	armState(0);
 	wait1Msec(600);
 	claw(50);
-	bwds(40,100,0);
+	bwds(60,100,0);
 	pArm(1400,0.07,100);
 }
 
