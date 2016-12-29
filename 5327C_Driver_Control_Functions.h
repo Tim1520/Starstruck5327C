@@ -55,8 +55,10 @@ void drive(int leftSpeed , int rightSpeed , int go)
 //---LAUNCHER---//:Powers arm at 127 speed multipied by input.
 void armState(float state)
 {
-	motor[LArm] = (state * -127);
-	motor[RArm] = (state * -127);
+	motor[LArm1] = (state * -127);
+	motor[LArm2] = (state * -127);
+	motor[RArm1] = (state * -127);
+	motor[RArm2] = (state * -127);
 }
 
 //---Arm---//:Power arm motors in direction desired by user.
@@ -104,7 +106,7 @@ void clawControl(bool toggle)
 }
 
 //---LIFT---//:Power lift normally at given speed.
-void lift(int go, int altgo, int upper, int lower, int speed, int height, int hspeed)
+/*void lift(int go, int altgo, int upper, int lower, int speed, int height, int hspeed)
 {
 	if(SensorValue[Transmission] == false)
 	{
@@ -156,7 +158,7 @@ void lift(int go, int altgo, int upper, int lower, int speed, int height, int hs
 		}
 	}
 }
-
+*/
 //---TRANSMISSION---//:Toggle between transmission piston.
 int buttonPressed1 = 0;
 int buttonToggleState1 = 0;
@@ -186,6 +188,7 @@ void baseToLift(bool toggle)
 }
 
 //---LIFT---//:Power lift and base at the same time.
+/*
 void hang(bool power,int speed)
 {
 	if(power)
@@ -204,6 +207,16 @@ void hang(bool power,int speed)
 		motor[RLift] = 0;
 		hanging = false;
 	}
+}
+*/
+
+task autoRelease()
+{
+if(SensorValue[release] == 1)
+{
+	buttonToggleState2 = 0;
+//SensorValue[Claw1] = 1;
+}
 }
 
 //:Kill Switch for autonomous testing
