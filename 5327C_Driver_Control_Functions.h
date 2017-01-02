@@ -64,6 +64,8 @@ void armState(float state)
 //---Arm---//:Power arm motors in direction desired by user.
 void arm(bool drop , bool up , float hspeed)
 {
+	if(!hanging)
+	{
 	if(drop && up)
 	{
 		armState(hspeed);
@@ -72,6 +74,7 @@ void arm(bool drop , bool up , float hspeed)
 	{
 		armState(drop - up);
 	}
+}
 }
 
 //---ClAW---//:Open or Close both claw arms at the same time.
@@ -188,13 +191,15 @@ void baseToLift(bool toggle)
 }
 
 //---LIFT---//:Power lift and base at the same time.
-/*
+
 void hang(bool power,int speed)
 {
 	if(power)
 	{
-		motor[LLift] = speed;
-		motor[RLift] = speed;
+		motor[RArm1] = speed;
+				motor[RArm2] = speed;
+						motor[LArm1] = speed;
+								motor[LArm2] = speed;
 		motor[RFBase] = speed;
 		motor[RBBase] = speed;
 		motor[LFBase] = speed;
@@ -203,12 +208,10 @@ void hang(bool power,int speed)
 	}
 	else if(SensorValue[Transmission] == true)
 	{
-		motor[LLift] = 0;
-		motor[RLift] = 0;
-		hanging = false;
+				hanging = false;
 	}
 }
-*/
+
 
 task autoRelease()
 {
