@@ -2,7 +2,7 @@
 //*******************************************AUTONOMOUS***************************************************//
 //********************************************************************************************************//
 void autonLeftAlt()
-{
+{//test
 	gyroSetupAlt(900,127);
 
 	//*Reverse to knock off fence.
@@ -42,15 +42,15 @@ void autonLeft()
 
 	fwds(130,100,50);
 	swing(840,90,LEFT,50);
-	fwds(775,80,100);
+	fwds(860,80,100);
 	claw(100);
 	pArm(1700,0.07,0);
 
-	turn(720,80,RIGHT,0);
+	turn(780,80,RIGHT,0);
 	base(50,-50);
 	wait1Msec(200);
 	base(0,0);
-	knockknock(1250,100);
+	knockknock(1100,100);
 	bwdsLaunch(250,100,0);
 
 	turn(20,80,RIGHT,100);
@@ -114,7 +114,7 @@ void autonRight()
 	base(-50,50);
 	wait1Msec(200);
 	base(0,0);
-	knockknock(1250,100);
+	knockknock(1100,100);
 	bwdsLaunch(250,100,0);
 
 	turn(27,80,LEFT,100);

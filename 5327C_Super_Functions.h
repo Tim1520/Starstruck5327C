@@ -45,14 +45,6 @@ void bwdsLaunch(int distance, int speed, int wait)
 {
 	clearTimer(T2);
 	nMotorEncoder[LBBase] = 0;
-	if(abs(nMotorEncoder[LBBase]) < distance && time1[T2] < 3000)
-	{
-		base(-speed,-speed);
-	}
-	else
-	{
-		base(0,0);
-	}
 	while(SensorValue[armPot] < launchHeight)
 	{
 		armState(1);
@@ -84,7 +76,7 @@ void bwdsLaunch(int distance, int speed, int wait)
 	{
 		if(abs(nMotorEncoder[LBBase]) < distance && time1[T2] < 3000)
 		{
-			base(speed,speed);
+			base(-speed,-speed);
 		}
 		else
 		{
