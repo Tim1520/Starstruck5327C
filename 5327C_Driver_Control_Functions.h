@@ -78,95 +78,10 @@ void arm(bool drop , bool up , float hspeed)
 }
 
 //---ClAW---//:Open or Close both claw arms at the same time.
-int buttonToggleState2 = 1;
-int buttonPressed2 = 0;
+int buttonToggleState1 = 1;
+int buttonPressed1 = 0;
 
 void clawControl(bool toggle)
-{
-	//RIGHT CLAW
-	if(toggle)
-	{
-		if(!buttonPressed2)
-		{
-			buttonToggleState2 = 1 - buttonToggleState2;
-			buttonPressed2 = 1;
-		}
-	}
-	else
-	{
-		buttonPressed2 = 0;
-	}
-	if(buttonToggleState2)
-	{
-		SensorValue[Claw1] = 0;
-		SensorValue[Claw2] = 0;
-	}
-	else
-	{
-		SensorValue[Claw1] = 1;
-		SensorValue[Claw2] = 1;
-	}
-}
-
-//---LIFT---//:Power lift normally at given speed.
-/*void lift(int go, int altgo, int upper, int lower, int speed, int height, int hspeed)
-{
-	if(SensorValue[Transmission] == false)
-	{
-		if(go != 0)
-		{
-			motor[LLift] = speed * go;
-			motor[RLift] = speed * go;
-		}
-		else if(upper)
-		{
-			if(SensorValue[liftPot] > 900)
-			{
-				motor[LLift] = -speed;
-				motor[RLift] = -speed;
-			}
-			else
-			{
-				motor[LLift] = -hspeed;
-				motor[RLift] = -hspeed;
-			}
-		}
-		else if(lower)
-		{
-			if(SensorValue[liftPot] > 1300)
-			{
-				motor[LLift] = -speed;
-				motor[RLift] = -speed;
-			}
-			else
-			{
-				motor[LLift] = -hspeed;
-				motor[RLift] = -hspeed;
-			}
-		}
-		else if(abs(altgo) > 10)
-		{
-			motor[LLift] = -altgo;
-			motor[RLift] = -altgo;
-		}
-		else if(SensorValue[liftPot] < height)
-		{
-			motor[LLift] = -hspeed;
-			motor[RLift] = -hspeed;
-		}
-		else
-		{
-			motor[LLift] = 0;
-			motor[RLift] = 0;
-		}
-	}
-}
-*/
-//---TRANSMISSION---//:Toggle between transmission piston.
-int buttonPressed1 = 0;
-int buttonToggleState1 = 0;
-
-void baseToLift(bool toggle)
 {
 	if(toggle)
 	{
@@ -182,44 +97,49 @@ void baseToLift(bool toggle)
 	}
 	if(buttonToggleState1)
 	{
-		SensorValue[Transmission] = true;
+		SensorValue[Claw1] = 0;
+		SensorValue[Claw2] = 0;
 	}
 	else
 	{
-		SensorValue[Transmission] = false;
+		SensorValue[Claw1] = 1;
+		SensorValue[Claw2] = 1;
 	}
 }
-
-//---LIFT---//:Power lift and base at the same time.
-
-void hang(bool power,int speed)
-{
-	if(power)
-	{
-		motor[RArm1] = speed;
-				motor[RArm2] = speed;
-						motor[LArm1] = speed;
-								motor[LArm2] = speed;
-		motor[RFBase] = speed;
-		motor[RBBase] = speed;
-		motor[LFBase] = speed;
-		motor[LBBase] = speed;
-		hanging = true;
-	}
-	else if(SensorValue[Transmission] == true)
-	{
-				hanging = false;
-	}
-}
-
 
 task autoRelease()
 {
-if(SensorValue[release] == 1)
-{
-	buttonToggleState2 = 0;
-//SensorValue[Claw1] = 1;
+	if(SensorValue[release] == 1)
+	{
+		buttonToggleState1 = 0;
+	}
 }
+
+int buttonToggleState2 = 1;
+int buttonPressed2 = 0;
+
+void liftLock(bool toggle)
+{
+	if(toggle)
+	{
+		if(!buttonPressed2)
+		{
+			buttonToggleState2 = 1 - buttonToggleState2;
+			buttonPressed2 = 1;
+		}
+	}
+	else
+	{
+		buttonPressed2 = 0;
+	}
+	if(buttonToggleState2)
+	{
+		SensorValue[Lock] = 0;
+	}
+	else
+	{
+		SensorValue[Lock] = 1;
+	}
 }
 
 //:Kill Switch for autonomous testing

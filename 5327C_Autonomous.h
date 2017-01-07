@@ -3,7 +3,7 @@
 //********************************************************************************************************//
 void autonCloseRedAlt()
 {
-	gyroSetup(900,127);
+/*	gyroSetup(900,127);
 
 	//*Reverse to knock off fence.
 	turn(200,80,LEFT,100);
@@ -32,7 +32,7 @@ void autonCloseRedAlt()
 
 void autonCloseRed()
 {
-	gyroSetup(900,127);
+	/*gyroSetup(900,127);
 
 	//*Reverse to knock off fence.
 	turn(200,80,LEFT,100);
@@ -67,7 +67,7 @@ void autonCloseRed()
 
 void autonFarRed()
 {
-	gyroSetup(900,127);
+	/*gyroSetup(900,127);
 
 	//*Reverse to knock off fence.
 	turn(245,80,RIGHT,100);
@@ -101,7 +101,7 @@ void autonFarRed()
 
 void autonCloseBlue()
 {
-	gyroSetup(900,127);
+	/*gyroSetup(900,127);
 
 	//*Reverse to knock off fence.
 	turn(200,80,LEFT,100);
@@ -136,7 +136,7 @@ void autonCloseBlue()
 
 void autonFarBlue()
 {
-	gyroSetup(900,127);
+	/*gyroSetup(900,127);
 
 	//*Reverse to knock off fence.
 	turn(200,80,LEFT,100);
@@ -171,7 +171,7 @@ void autonFarBlue()
 
 void skills()
 {
-	gyroSetup(900,127);
+/*	gyroSetup(900,127);
 
 	//*Reverse to knock off fence.
 	turn(200,80,LEFT,100);
@@ -203,5 +203,5 @@ void skills()
 	knockknock(1300,100);
 	bwds(250,100,100);
 	launch(0);
-
+*/
 }

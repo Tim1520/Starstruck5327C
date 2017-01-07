@@ -1,10 +1,7 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
-#pragma config(Sensor, in1,    liftPot,        sensorPotentiometer)
-#pragma config(Sensor, in2,    gyro,           sensorGyro)
-#pragma config(Sensor, in3,    armPot,         sensorPotentiometer)
-#pragma config(Sensor, in4,    xAccel,         sensorAccelerometer)
+#pragma config(Sensor, in1,    armPot,         sensorPotentiometer)
 #pragma config(Sensor, dgtl2,  Claw1,          sensorDigitalOut)
-#pragma config(Sensor, dgtl3,  Transmission,   sensorDigitalOut)
+#pragma config(Sensor, dgtl3,  Lock,           sensorDigitalOut)
 #pragma config(Sensor, dgtl4,  REncoder,       sensorQuadEncoder)
 #pragma config(Sensor, dgtl6,  LEncoder,       sensorQuadEncoder)
 #pragma config(Sensor, dgtl11, Claw2,          sensorDigitalOut)
@@ -60,10 +57,8 @@ task usercontrol()
 		startTask(autoRelease);
 		drive(vexRT[Ch3] , vexRT[Ch2] , vexRT[Btn8U]);
 		clawControl(vexRT[Btn5U] || vexRT[Btn5UXmtr2]);
-		//lift((vexRT[Btn7L] || vexRT[Btn7LXmtr2]) - (vexRT[Btn7U] || vexRT[Btn7UXmtr2]), vexRT[Ch3Xmtr2], vexRT[Btn7DXmtr2], vexRT[Btn8DXmtr2], 127, 2300, 20);
-		baseToLift(vexRT[Btn8U] || vexRT[Btn8UXmtr2]);
-		hang(vexRT[Btn8R] || vexRT[Btn8RXmtr2], 127);
 		arm(vexRT[Btn6U] || vexRT[Btn6UXmtr2], vexRT[Btn6D] || vexRT[Btn6DXmtr2], 0.12);
+		liftLock(vexRT[Btn8U]);
 		if(vexRT[Btn8D] == 1)
 		{
 			startTask(killSwitch);
