@@ -62,19 +62,20 @@ void armState(float state)
 }
 
 //---Arm---//:Power arm motors in direction desired by user.
-void arm(bool drop , bool up , float hspeed)
+void arm(bool drop , bool up , bool slow , float hspeed , float sspeed)
 {
-	if(!hanging)
-	{
 	if(drop && up)
 	{
 		armState(hspeed);
+	}
+	else if(slow)
+	{
+		armState(sspeed);
 	}
 	else
 	{
 		armState(drop - up);
 	}
-}
 }
 
 //---ClAW---//:Open or Close both claw arms at the same time.

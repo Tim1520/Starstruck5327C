@@ -51,8 +51,8 @@ void swing(int distance, int speed, int direction, int wait)
 void fwds(int distance, int speed, int wait)
 {
 	clearTimer(T2);
-	SensorValue[LEncoder] = 0;
-	while(abs(SensorValue[LEncoder]) < distance && time1[T2] < 3000)
+	SensorValue[REncoder] = 0;
+	while(abs(SensorValue[REncoder]) < distance && time1[T2] < 3000)
 	{
 		base(speed,speed);
 	}

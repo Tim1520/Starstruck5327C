@@ -26,9 +26,9 @@
 //VRC Specific pragmas above
 
 #include "5327C_Driver_Control_Functions.h"
-//#include "5327C_Autonomous_Functions.h"
-//#include "5327C_Super_Functions.h"
-//#include "5327C_Autonomous.h"
+#include "5327C_Autonomous_Functions.h"
+#include "5327C_Super_Functions.h"
+#include "5327C_Autonomous.h"
 
 //--------------------------------------------------------------------------------------------------------//
 //-----------------------------------------------PRE_AUTON------------------------------------------------//
@@ -57,12 +57,12 @@ task usercontrol()
 		startTask(autoRelease);
 		drive(vexRT[Ch3] , vexRT[Ch2] , vexRT[Btn8U]);
 		clawControl(vexRT[Btn5U] || vexRT[Btn5UXmtr2]);
-		arm(vexRT[Btn6U] || vexRT[Btn6UXmtr2], vexRT[Btn6D] || vexRT[Btn6DXmtr2], 0.12);
+		arm(vexRT[Btn6U] || vexRT[Btn6UXmtr2], vexRT[Btn6D] || vexRT[Btn6DXmtr2], vexRT[Btn8D], 0.12, 0.5);
 		liftLock(vexRT[Btn8U]);
-		if(vexRT[Btn8D] == 1)
+		if(vexRT[Btn7D] == 1)
 		{
 			startTask(killSwitch);
-			//autonCloseRed();
+			turn(3000,80,LEFT,0);
 		}
 	}
 }
