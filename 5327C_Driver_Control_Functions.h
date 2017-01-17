@@ -62,7 +62,7 @@ void armState(float state)
 }
 
 //---Arm---//:Power arm motors in direction desired by user.
-void arm(bool drop , bool up , bool slow , float hspeed , float sspeed)
+void arm(bool up , bool drop , bool slow , float joystick, float hspeed , float sspeed)
 {
 	if(drop && up)
 	{
@@ -72,9 +72,17 @@ void arm(bool drop , bool up , bool slow , float hspeed , float sspeed)
 	{
 		armState(sspeed);
 	}
+	else if(up || drop)
+	{
+		armState(up - drop);
+	}
+	else if(abs(joystick) > 10)
+	{
+		armState(joystick/127);
+	}
 	else
 	{
-		armState(drop - up);
+		armState(0);
 	}
 }
 
@@ -148,7 +156,7 @@ task killSwitch()
 {
 	while(true)
 	{
-		if(vexRT[Btn7D] == 1)
+		if(vexRT[Btn7R] == 1)
 		{
 			stopAllTasks();
 		}

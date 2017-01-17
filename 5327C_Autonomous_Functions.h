@@ -11,7 +11,7 @@ void base(int rSpeed, int lSpeed)
 }
 
 //---Turn---//:Turns robot to a given angle at a given speed.
-void turn(int distance, int speed, int direction, int wait)
+void turn(int distance, int speed, int direction, int brake, int wait)
 {
 	SensorValue[LEncoder] = 0;
 	SensorValue[REncoder] = 0;
@@ -19,12 +19,17 @@ void turn(int distance, int speed, int direction, int wait)
 	{
 		base((direction * speed) , (-direction * speed));
 	}
+	if(brake != 0)
+	{
+		base(-brake,-brake);
+		wait1Msec(200);
+	}
 	base(0,0);
 	wait1Msec(wait);
 }
 
 //---Swing---//:Turns using only one side of the base.
-void swing(int distance, int speed, int direction, int wait)
+void swing(int distance, int speed, int direction, int brake, int wait)
 {
 	SensorValue[LEncoder] = 0;
 	SensorValue[REncoder] = 0;
@@ -34,12 +39,55 @@ void swing(int distance, int speed, int direction, int wait)
 		{
 			base(direction * speed,-10);
 		}
+		if(brake != 0)
+		{
+			base(-brake,0);
+			wait1Msec(200);
+		}
 	}
 	else
 	{
 		while(direction * SensorValue[LEncoder] < distance)
 		{
 			base(-10,-direction * speed);
+		}
+		if(brake != 0)
+		{
+			base(0,-brake);
+			wait1Msec(200);
+		}
+	}
+
+	base(0,0);
+	wait1Msec(wait);
+}
+
+void swingB(int distance, int speed, int direction, int brake, int wait)
+{
+	SensorValue[LEncoder] = 0;
+	SensorValue[REncoder] = 0;
+	if(direction > 0)
+	{
+		while(direction * SensorValue[LEncoder] < distance)
+		{
+			base(10,-direction * speed);
+		}
+		if(brake != 0)
+		{
+			base(0,brake);
+			wait1Msec(200);
+		}
+	}
+	else
+	{
+		while(direction * SensorValue[REncoder] <distance)
+		{
+			base(direction * speed,10);
+		}
+		if(brake != 0)
+		{
+			base(brake,0);
+			wait1Msec(200);
 		}
 	}
 
