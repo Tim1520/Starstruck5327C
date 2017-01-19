@@ -62,7 +62,8 @@ task usercontrol()
 		if(vexRT[Btn7D] == 1)
 		{
 			startTask(killSwitch);
-			autonCloseRedAlt();
+			autonDVL();
+
 		}
 	}
 }

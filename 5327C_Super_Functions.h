@@ -5,26 +5,33 @@
 //---Setup---//:Sets up the gyro and position for the robot to expand
 void setup()
 {
-	fwds(800,127,100);
+	//fwds(800,127,100);
 	armState(1);
-	wait1Msec(200);
+	wait1Msec(300);
 	armState(-1);
 	wait1Msec(200);
 	armState(0);
-	bwds(2000,100,300);
+	bwds(1200,100,300);
 	claw(600);
 }
 task launch()
 {
-	startTask(autoRelease);
 	while(!SensorValue[release])
 	{
 		armState(1);
 	}
-	wait1Msec(400);
-	while(SensorValue[armPot] > 690)
+	claw(400);
+	armState(-1);
+	wait1Msec(1400);
+	armState(0);
+}
+task knock()
+{
+	while(!SensorValue[release])
 	{
-		armState(-1);
+		armState(1);
 	}
+	armState(-1);
+	wait1Msec(1400);
 	armState(0);
 }
