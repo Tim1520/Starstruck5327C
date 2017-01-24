@@ -45,6 +45,7 @@ task autonomous
 	//autonFarBlue();
 	//autonCloseBlue();
 	//skills();
+	auton8000L();
 }
 
 //--------------------------------------------------------------------------------------------------------//
@@ -62,7 +63,7 @@ task usercontrol()
 		if(vexRT[Btn7D] == 1)
 		{
 			startTask(killSwitch);
-			autonDVL();
+			auton8000L();
 
 		}
 	}

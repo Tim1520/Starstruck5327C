@@ -113,6 +113,17 @@ void bwds(int distance, int speed, int wait)
 	fwds(distance, -speed, wait);
 }
 
+void bwdsT(int time, int speed, int wait)
+{
+	base(-speed,-speed);
+	wait1Msec(time);
+	base(0,0);
+	wait1Msec(wait);
+}
+void fwdsT(int time, int speed, int wait)
+{
+	bwdsT(time,-speed,wait);
+}
 //---Claw--//:Switches the claw from closed to open or open to closed.
 void lclaw(int wait)
 {
