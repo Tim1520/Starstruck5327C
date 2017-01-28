@@ -10,7 +10,7 @@ void auton8000L()
 	pArm(920,0.12,0);
 	turn(400,70,RIGHT,10,100);
 	bwds(7100,100,100);
-	turn(2500,80,RIGHT,10,100);
+	turn(2100,80,RIGHT,10,100);
 	startTask(launch);
 	bwds(4200,100,2000);
 

@@ -12,7 +12,7 @@ void setup()
 	wait1Msec(200);
 	armState(0);
 	bwds(1200,100,300);
-	claw(600);
+	claw(800);
 }
 task launch()
 {
