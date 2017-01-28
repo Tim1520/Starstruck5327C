@@ -5,16 +5,23 @@ void auton8000L()
 {
 	setup();
 
-	fwds(7200,100,300);
+	fwds(7000,100,300);
 	claw(200);
-	pArm(960,0.12,0);
-	bwds(2200,100,0);
-	swingB(130,80,RIGHT,0,0);
-	bwds(500,100,0);
-	swingB(130,80,RIGHT,0,0);
-	bwds(1500,100,0);
-	swingB(4200,80,RIGHT,0,0);
-	bwds(3300,100,100);
+	pArm(920,0.12,0);
+	turn(400,70,RIGHT,10,100);
+	bwds(7100,100,100);
+	turn(2500,80,RIGHT,10,100);
+	startTask(launch);
+	bwds(4200,100,2000);
+
+	swing(3200,80,LEFT,10,100);
+	fwds(3000,100,300);
+	claw(200);
+	pArm(960,0.12,100);
+	bwds(3000,100,100);
+	turn(1900,80,RIGHT,10,100);
+	startTask(launch);
+	bwds(2200,100,2400);
 	//*/
 	wait1Msec(1000);
 }
