@@ -23,11 +23,16 @@ const unsigned int TrueSpeed[128] =
 #define LEFT 1
 #define RIGHT -1
 
+bool down = false;
+bool hold = false;
+bool stp = false;
+bool stp2 = false;
+bool limit = false;
+
 //---BASE---//:Powers motors to true speed values for acurate control.
-bool hanging = false;
-void drive(int leftSpeed , int rightSpeed , int go)
+void drive(int leftSpeed , int rightSpeed , int go, int test)
 {
-	if(!go && !hanging)
+	if(!go && !test)
 	{
 		if(leftSpeed > 0)
 		{
@@ -50,105 +55,196 @@ void drive(int leftSpeed , int rightSpeed , int go)
 			motor[RBBase] = -TrueSpeed[-rightSpeed];
 		}
 	}
+	else if(test)
+	{
+		motor[LFBase] = 127;
+		motor[LBBase] = 127;
+		motor[RFBase] = 127;
+		motor[RBBase] = 127;
+	}
+	else
+	{
+		motor[LFBase] = -127;
+		motor[LBBase] = -127;
+		motor[RFBase] = -127;
+		motor[RBBase] = -127;
+	}
 }
 
 //---LAUNCHER---//:Powers arm at 127 speed multipied by input.
 void armState(float state)
 {
-	motor[LArm1] = (state * -127);
-	motor[LArm2] = (state * -127);
-	motor[RArm1] = (state * -127);
-	motor[RArm2] = (state * -127);
+	motor[LArm1] = (state * 127);
+	motor[LArm2] = (state * 127);
+	motor[RArm1] = (state * 127);
+	motor[RArm2] = (state * 127);
 }
 
 //---Arm---//:Power arm motors in direction desired by user.
 void arm(bool up , bool drop , bool slow , float joystick, float hspeed , float sspeed)
 {
-	if(drop && up)
+	if(!stp)
 	{
-		armState(hspeed);
-	}
-	else if(slow)
-	{
-		armState(sspeed);
-	}
-	else if(up || drop)
-	{
-		armState(up - drop);
-	}
-	else if(abs(joystick) > 10)
-	{
-		armState(joystick/127);
-	}
-	else
-	{
-		armState(0);
+		if(drop && up)
+		{
+			armState(hspeed);
+			hold = true;
+		}
+		else if(slow)
+		{
+			armState(sspeed);
+			hold = false;
+		}
+		else if(up)
+		{
+			armState(up);
+			down = false;
+			hold = false;
+		}
+		else if(drop)
+		{
+			armState(-down);
+			down = true;
+			hold = false;
+		}
+		else if(abs(joystick) > 20)
+		{
+			armState(joystick/127);
+			hold = false;
+		}
+		else
+		{
+			hold = false;
+			if(SensorValue[armPot] < 400 && down)
+				armState(-0.2);
+			else
+				armState(0);
+		}
 	}
 }
 
 //---ClAW---//:Open or Close both claw arms at the same time.
-int buttonToggleState1 = 1;
-int buttonPressed1 = 0;
-
-void clawControl(bool toggle)
+void clawControl(bool open, bool close)
 {
-	if(toggle)
+	if(SensorValue[clawPot] > 3545)
 	{
-		if(!buttonPressed1)
+		limit = true;
+	}
+	else
+	{
+		limit = false;
+	}
+	if(!stp2)
+	{
+		if(open)
 		{
-			buttonToggleState1 = 1 - buttonToggleState1;
-			buttonPressed1 = 1;
+			motor[clw] = 127;
+			clearTimer(T2);
+		}
+		else if(close && !limit)
+		{
+			motor[clw] = -127;
+			clearTimer(T3);
+		}
+		else if(SensorValue[armPot] > 1800 && SensorValue[clawPot] > 2900 && !hold)
+		{
+			motor[clw] = 127;
+			clearTimer(T2);
+		}
+		else if(time1[T2] > 500 && !limit)
+		{
+			motor[clw] = -20;
+		}
+		else if(time1[T2] > 20)
+		{
+			if(time1[T3] < 100)
+			{
+				motor[clw] = 10;
+			}
+			else
+			{
+				clearTimer(T2);
+				motor[clw] = 5;
+			}
+		}
+		else
+		{
+			motor[clw] = 5;
+			clearTimer(T2);
 		}
 	}
-	else
+}
+int count = 0;
+//Winch
+void lastShot(int hit, int back)
+{
+	if(!stp2)
 	{
-		buttonPressed1 = 0;
-	}
-	if(buttonToggleState1)
-	{
-		SensorValue[Claw1] = 0;
-		SensorValue[Claw2] = 0;
-	}
-	else
-	{
-		SensorValue[Claw1] = 1;
-		SensorValue[Claw2] = 1;
+		motor[winch] = 127 * (hit - back);
+		count = 0;
 	}
 }
 
-task autoRelease()
+task ls()
 {
-	if(SensorValue[release] == 1)
+	count = 1;
+	hold = false;
+	motor[clw] = -40;
+	while(SensorValue[armPot] < 2480)
 	{
-		buttonToggleState1 = 0;
-	}
-}
-
-int buttonToggleState2 = 1;
-int buttonPressed2 = 0;
-
-void liftLock(bool toggle)
-{
-	if(toggle)
-	{
-		if(!buttonPressed2)
+		if(SensorValue[winchPot] < 2830)
 		{
-			buttonToggleState2 = 1 - buttonToggleState2;
-			buttonPressed2 = 1;
+			stp2 = true;
+			motor[winch] = 127;
+		}
+		else
+		{
+			motor[winch] = 0;
+		}
+		if(SensorValue[armPot] > 1800 && SensorValue[clawPot] > 2900)
+		{
+			motor[clw] = 127;
+		}
+		if(SensorValue[armPot] > 410)
+		{
+			stp = true;
+			armState(1);
 		}
 	}
-	else
+	armState(0);
+	stp2 = false;
+	stp = false;
+}
+
+task ls2()
+{
+	count = 2;
+	hold = false;
+	clearTimer(T1);
+	while(SensorValue[armPot] < 2480)
 	{
-		buttonPressed2 = 0;
+		if(time1[T1] < 1000)
+		{
+			stp2 = true;
+			motor[winch] = 127;
+		}
+		else
+		{
+			motor[winch] = 0;
+		}
+		if(SensorValue[armPot] > 1800 && SensorValue[clawPot] > 2900)
+		{
+			motor[clw] = 127;
+		}
+		if(SensorValue[armPot] > 410)
+		{
+			stp = true;
+			armState(1);
+		}
 	}
-	if(buttonToggleState2)
-	{
-		SensorValue[Lock] = 0;
-	}
-	else
-	{
-		SensorValue[Lock] = 1;
-	}
+	armState(0);
+	stp = false;
+	stp2 = false;
 }
 
 //:Kill Switch for autonomous testing

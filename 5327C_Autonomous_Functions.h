@@ -21,8 +21,8 @@ void turn(int distance, int speed, int direction, int brake, int wait)
 	}
 	if(brake != 0)
 	{
-		base(-brake,-brake);
-		wait1Msec(200);
+		base(-direction * brake,direction * brake);
+		wait1Msec(100);
 	}
 	base(0,0);
 	wait1Msec(wait);
@@ -96,7 +96,7 @@ void swingB(int distance, int speed, int direction, int brake, int wait)
 }
 
 //---Forwards/Backwards---//:Moves the base forward and backward using IME's.
-void fwds(int distance, int speed, int wait)
+void fwds(int distance, int speed, int brake, int wait)
 {
 	clearTimer(T2);
 	SensorValue[REncoder] = 0;
@@ -104,13 +104,18 @@ void fwds(int distance, int speed, int wait)
 	{
 		base(speed,speed);
 	}
+	if(brake != 0)
+	{
+		base(-brake,-brake);
+		wait1Msec(100);
+	}
 	base(0,0);
 	wait1Msec(wait);
 }
 
-void bwds(int distance, int speed, int wait)
+void bwds(int distance, int speed, int brake, int wait)
 {
-	fwds(distance, -speed, wait);
+	fwds(distance, -speed, brake, wait);
 }
 
 void bwdsT(int time, int speed, int wait)
@@ -120,26 +125,10 @@ void bwdsT(int time, int speed, int wait)
 	base(0,0);
 	wait1Msec(wait);
 }
+
 void fwdsT(int time, int speed, int wait)
 {
 	bwdsT(time,-speed,wait);
-}
-//---Claw--//:Switches the claw from closed to open or open to closed.
-void lclaw(int wait)
-{
-	SensorValue[Claw2] = !SensorValue[Claw2];
-	wait1Msec(wait);
-}
-void rclaw(int wait)
-{
-	SensorValue[Claw1] = !SensorValue[Claw1];
-	wait1Msec(wait);
-}
-void claw(int wait)
-{
-	lclaw(0);
-	rclaw(0);
-	wait1Msec(wait);
 }
 
 void pArm(int height, float hspeed, int wait)
@@ -159,5 +148,53 @@ void pArm(int height, float hspeed, int wait)
 		}
 	}
 	armState(hspeed);
+	wait1Msec(wait);
+}
+
+void pArmH(int height, float hspeed, int wait)
+{
+	if(SensorValue[armPot] < height)
+	{
+		while(SensorValue[armPot] < height)
+		{
+			armState(0.09);
+		}
+	}
+	else
+	{
+		while(SensorValue[armPot] > height)
+		{
+			armState(-0.09);
+		}
+	}
+	armState(hspeed);
+	wait1Msec(wait);
+}
+
+void pClaw(int value, int hspeed, int wait)
+{
+	if(SensorValue[clawPot] < value)
+	{
+		while(SensorValue[clawPot] < value)
+		{
+			motor[clw] = -127;
+		}
+	}
+	else
+	{
+		while(SensorValue[clawPot] > value)
+		{
+			motor[clw] = 127;
+		}
+	}
+	motor[clw] = hspeed;
+	wait1Msec(wait);
+}
+
+void tClaw(int time, int speed, int hspeed, int wait)
+{
+	motor[clw] = -speed;
+	wait1Msec(time);
+	motor[clw] = -hspeed;
 	wait1Msec(wait);
 }

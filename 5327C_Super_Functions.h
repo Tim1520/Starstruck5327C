@@ -1,37 +1,58 @@
-//*********************************************************bwds***********************************************//
+//********************************************************************************************************//
 //********************************************SUPER_FUNCTIONS*********************************************//
 //********************************************************************************************************//
-
-//---Setup---//:Sets up the gyro and position for the robot to expand
-void setup()
-{
-	//fwds(800,127,100);
-	armState(1);
-	wait1Msec(300);
-	armState(-1);
-	wait1Msec(200);
-	armState(0);
-	bwds(1200,100,300);
-	claw(800);
-}
 task launch()
 {
-	while(!SensorValue[release])
+	while(SensorValue[armPot] < 2480)
 	{
 		armState(1);
+		if(SensorValue[armPot] > 1800 && SensorValue[clawPot] > 2900)
+		{
+			motor[clw] = 127;
+		}
+		else if(SensorValue[clawPot] > 2900)
+		{
+			motor[clw] = 0;
+		}
 	}
-	claw(400);
+	motor[clw] = 0;
+	armState(0);
+	wait1Msec(600);
 	armState(-1);
-	wait1Msec(1400);
+	wait1Msec(2100);
+	armState(-0.12);
+}
+
+task lastLaunch()
+{
+	while(SensorValue[armPot] < 2480)
+	{
+		armState(1);
+		if(SensorValue[armPot] > 1800 && SensorValue[clawPot] > 2900)
+		{
+			motor[clw] = 127;
+		}
+		else if(SensorValue[clawPot] > 2900)
+		{
+			motor[clw] = 0;
+		}
+	}
+	motor[clw] = 0;
 	armState(0);
 }
-task knock()
+
+task hoard()
 {
-	while(!SensorValue[release])
-	{
-		armState(1);
-	}
-	armState(-1);
-	wait1Msec(1400);
-	armState(0);
+	pArm(1500,0,0);
+	pClaw(3500,0,0);
+	pArmH(2500,0,0);
+}
+
+task lift()
+{
+	pArmH(1850,-0.12,0);
+}
+task sClose()
+{
+	pClaw(2100,-10,0);
 }
