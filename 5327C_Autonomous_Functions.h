@@ -191,6 +191,7 @@ void pClaw(int value, int hspeed, int wait)
 	wait1Msec(wait);
 }
 
+
 void tClaw(int time, int speed, int hspeed, int wait)
 {
 	motor[clw] = -speed;

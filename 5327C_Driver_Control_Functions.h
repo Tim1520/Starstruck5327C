@@ -146,7 +146,7 @@ void clawControl(bool open, bool close)
 			motor[clw] = -127;
 			clearTimer(T3);
 		}
-		else if(SensorValue[armPot] > 1800 && SensorValue[clawPot] > 2900 && !hold)
+		else if(SensorValue[armPot] > 1400 && SensorValue[clawPot] > 2900 && !hold)
 		{
 			motor[clw] = 127;
 			clearTimer(T2);
@@ -189,6 +189,7 @@ task ls()
 {
 	count = 1;
 	hold = false;
+	stp2 = true;
 	motor[clw] = -40;
 	while(SensorValue[armPot] < 2480)
 	{
@@ -201,7 +202,7 @@ task ls()
 		{
 			motor[winch] = 0;
 		}
-		if(SensorValue[armPot] > 1800 && SensorValue[clawPot] > 2900)
+		if(SensorValue[armPot] > 1400 && SensorValue[clawPot] > 2900)
 		{
 			motor[clw] = 127;
 		}
@@ -214,39 +215,58 @@ task ls()
 	armState(0);
 	stp2 = false;
 	stp = false;
-}
-
-task ls2()
-{
-	count = 2;
-	hold = false;
-	clearTimer(T1);
-	while(SensorValue[armPot] < 2480)
+	while(true)
 	{
-		if(time1[T1] < 1000)
+		if(vexRT[Btn8U])
 		{
+			hold = false;
 			stp2 = true;
+			motor[clw] = -40;
 			motor[winch] = 127;
 		}
 		else
 		{
 			motor[winch] = 0;
 		}
-		if(SensorValue[armPot] > 1800 && SensorValue[clawPot] > 2900)
+		if(SensorValue[armPot] > 1400 && SensorValue[clawPot] > 2900)
 		{
 			motor[clw] = 127;
-		}
-		if(SensorValue[armPot] > 410)
-		{
-			stp = true;
-			armState(1);
+			stp2 = false;
 		}
 	}
-	armState(0);
-	stp = false;
-	stp2 = false;
 }
-
+/*
+task ls2()
+{
+count = 2;
+hold = false;
+clearTimer(T1);
+while(SensorValue[armPot] < 2480)
+{
+if(time1[T1] < 1000)
+{
+stp2 = true;
+motor[winch] = 127;
+}
+else
+{
+motor[winch] = 0;
+}
+if(SensorValue[armPot] > 1800 && SensorValue[clawPot] > 2900)
+{
+motor[clw] = 127;
+}
+if(SensorValue[armPot] > 410)
+{
+stp = true;
+armState(1);
+}
+}
+armState(0);
+stp = false;
+stp2 = false;
+}
+*/
 //:Kill Switch for autonomous testing
 task killSwitch()
 {

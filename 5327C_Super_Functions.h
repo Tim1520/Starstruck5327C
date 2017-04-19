@@ -1,6 +1,12 @@
 //********************************************************************************************************//
 //********************************************SUPER_FUNCTIONS*********************************************//
 //********************************************************************************************************//
+
+task sClose()
+{
+	pClaw(2600,5,0);
+}
+
 task launch()
 {
 	while(SensorValue[armPot] < 2480)
@@ -15,12 +21,13 @@ task launch()
 			motor[clw] = 0;
 		}
 	}
+	startTask(sClose);
 	motor[clw] = 0;
 	armState(0);
 	wait1Msec(600);
 	armState(-1);
-	wait1Msec(2100);
-	armState(-0.12);
+	wait1Msec(2300);
+	armState(-0.2);
 }
 
 task lastLaunch()
@@ -41,18 +48,25 @@ task lastLaunch()
 	armState(0);
 }
 
-task hoard()
+task hLift()
 {
-	pArm(1500,0,0);
+	pArmH(800,-0.06,0);
+}
+task hClaw()
+{
+	wait1Msec(400);
 	pClaw(3500,0,0);
-	pArmH(2500,0,0);
+}
+task open()
+{
+	motor[winch] = 127;
+	wait1Msec(250);
+	motor[winch] = -127;
+	wait1Msec(250);
+	motor[winch] = 0;
 }
 
 task lift()
 {
-	pArmH(1850,-0.12,0);
-}
-task sClose()
-{
-	pClaw(2100,-10,0);
+	pArmH(1700,-0.18,0);
 }

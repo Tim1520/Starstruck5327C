@@ -66,19 +66,15 @@ task usercontrol()
 		lastShot(vexRT[Btn8R],vexRT[Btn8D]);
 		arm(vexRT[Btn6U] || vexRT[Btn6UXmtr2], vexRT[Btn6D] || vexRT[Btn6DXmtr2], false, vexRT[Ch3Xmtr2], 0.12, 0.5);
 
-		if(vexRT[Btn8U] && count == 0)
+		if(vexRT[Btn8U] && SensorValue[winchPot] < 2830)
 		{
 			startTask(ls);
-		}
-		else if(vexRT[Btn8U] && count == 1)
-		{
-			startTask(ls2);
 		}
 
 		if(vexRT[Btn7D] == 1)
 		{
 			startTask(killSwitch);
-			hoardL();
+			takeTheR();
 		}
 	}
 }
